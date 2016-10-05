@@ -1,0 +1,74 @@
+MongoDB shell version: 2.6.3
+connecting to: test
+Server has startup warnings:
+2016-07-26T10:18:15.565+0530 [initandlisten]
+2016-07-26T10:18:15.565+0530 [initandlisten] ** NOTE: This is a 32 bit MongoDB binary.
+2016-07-26T10:18:15.565+0530 [initandlisten] **       32 bit builds are limited to less than 2GB of data (or less with --journal).
+2016-07-26T10:18:15.565+0530 [initandlisten] **       Note that journaling defaults to off for 32 bit and is currently off.
+2016-07-26T10:18:15.565+0530 [initandlisten] **       See http://dochub.mongodb.org/core/32bit
+2016-07-26T10:18:15.565+0530 [initandlisten]
+> db
+test
+> use employee
+switched to db employee
+> db.employee.insert({name:'Renu'},{MNO:12345},{Salary:100000},{City:pune})
+2016-07-26T10:24:49.084+0530 ReferenceError: pune is not defined
+> db.employee.insert({name:'Renu'},{MNO:12345},{Salary:100000},{City:'pune'})
+WriteResult({ "nInserted" : 1 })
+> db.employee.drop()
+true
+> db.employee.insert({name:'Renu',MNO:12345,Salary:100000,City:'pune'})
+WriteResult({ "nInserted" : 1 })
+> db.employee.find()
+{ "_id" : ObjectId("5796ed7525d1c7c6ee78746a"), "name" : "Renu", "MNO" : 12345, "Salary" : 100000, "City" : "pune" }
+> db.employee.insert({name:'Rakesh',MNO:12346,Salary:120000,City:'pimpri'})
+WriteResult({ "nInserted" : 1 })
+> db.employee.insert({name:'Menu',MNO:[12346,12347],Salary:120000,City:'pimpri'})
+WriteResult({ "nInserted" : 1 })
+> db.employee.insert({name:'Rakhi',MNO:[12348],Salary:200000,City:'mumbai'})
+WriteResult({ "nInserted" : 1 })
+> db.employee.insert({name:'Sherly',MNO:[12341,12349],Salary:150000,City:'pune'})
+WriteResult({ "nInserted" : 1 })
+> db.employee.find()
+{ "_id" : ObjectId("5796ed7525d1c7c6ee78746a"), "name" : "Renu", "MNO" : 12345, "Salary" : 100000, "City" : "pune" }
+{ "_id" : ObjectId("5796edb425d1c7c6ee78746b"), "name" : "Rakesh", "MNO" : 12346, "Salary" : 120000, "City" : "pimpri" }
+{ "_id" : ObjectId("5796ee8225d1c7c6ee78746c"), "name" : "Menu", "MNO" : [ 12346, 12347 ], "Salary" : 120000, "City" : "pimpri" }
+{ "_id" : ObjectId("5796eece25d1c7c6ee78746d"), "name" : "Rakhi", "MNO" : [ 12348 ], "Salary" : 200000, "City" : "mumbai" }
+{ "_id" : ObjectId("5796ef1725d1c7c6ee78746e"), "name" : "Sherly", "MNO" : [ 12341, 12349 ], "Salary" : 150000, "City" : "pune" }
+> db.employee.update({name:Renu},{$set:{age:33}})
+2016-07-26T10:39:02.134+0530 ReferenceError: Renu is not defined
+> db.employee.update({name:'Renu'},{$set:{age:33}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.find()
+{ "_id" : ObjectId("5796ed7525d1c7c6ee78746a"), "name" : "Renu", "MNO" : 12345, "Salary" : 100000, "City" : "pune", "age" : 33 }
+{ "_id" : ObjectId("5796edb425d1c7c6ee78746b"), "name" : "Rakesh", "MNO" : 12346, "Salary" : 120000, "City" : "pimpri" }
+{ "_id" : ObjectId("5796ee8225d1c7c6ee78746c"), "name" : "Menu", "MNO" : [ 12346, 12347 ], "Salary" : 120000, "City" : "pimpri" }
+{ "_id" : ObjectId("5796eece25d1c7c6ee78746d"), "name" : "Rakhi", "MNO" : [ 12348 ], "Salary" : 200000, "City" : "mumbai" }
+{ "_id" : ObjectId("5796ef1725d1c7c6ee78746e"), "name" : "Sherly", "MNO" : [ 12341, 12349 ], "Salary" : 150000, "City" : "pune" }
+> db.employee.update({name:'Rakesh'},{$set:{age:35}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.update({name:'Menu'},{$set:{age:32}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.update({name:'Rakhi'},{$set:{age:37}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.update({name:'Sherly'},{$set:{age:40}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.find()
+{ "_id" : ObjectId("5796ed7525d1c7c6ee78746a"), "name" : "Renu", "MNO" : 12345, "Salary" : 100000, "City" : "pune", "age" : 33 }
+{ "_id" : ObjectId("5796edb425d1c7c6ee78746b"), "name" : "Rakesh", "MNO" : 12346, "Salary" : 120000, "City" : "pimpri", "age" : 35 }
+{ "_id" : ObjectId("5796eece25d1c7c6ee78746d"), "name" : "Rakhi", "MNO" : [ 12348 ], "Salary" : 200000, "City" : "mumbai", "age" : 37 }
+{ "_id" : ObjectId("5796ee8225d1c7c6ee78746c"), "name" : "Menu", "MNO" : [ 12346, 12347 ], "Salary" : 120000, "City" : "pimpri", "age" : 32 }
+{ "_id" : ObjectId("5796ef1725d1c7c6ee78746e"), "name" : "Sherly", "MNO" : [ 12341, 12349 ], "Salary" : 150000, "City" : "pune", "age" : 40 }
+> db.employee.count()
+5
+
+> db.employee.aggregate({$group:{_id:null,"total":{"$min":"$Salary"}}})
+{ "_id" : null, "total" : 100000 }
+> db.employee.aggregate({$group:{_id:null,"Min_Sal":{"$min":"$Salary"}}})
+{ "_id" : null, "Min_Sal" : 100000 }
+> db.employee.aggregate({$group:{_id:null,"Max_Sal":{"$max":"$Salary"}}})
+{ "_id" : null, "Max_Sal" : 200000 }
+> db.employee.aggregate({$group:{_id:null,"Total_sal":{"$sum":"$Salary"}}})
+{ "_id" : null, "Total_sal" : 690000 }
+> db.employee.aggregate({$group:{_id:null,"Average_sal":{"$avg":"$Salary"}}})
+{ "_id" : null, "Average_sal" : 138000 }
